@@ -1,0 +1,27 @@
+# Flutter 与 IDE 生成文件。
+.dart_tool/
+.idea/
+build/
+coverage/
+*.iml
+*.log
+.flutter-plugins
+.flutter-plugins-dependencies
+/pubspec.lock
+
+# 原生平台本机配置与临时产物。
+**/ephemeral/
+**/.gradle/
+**/gradlew
+**/gradlew.bat
+**/gradle-wrapper.jar
+**/gradle-daemon-jvm.properties
+**/local.properties
+**/Generated.xcconfig
+**/flutter_export_environment.sh
+**/GeneratedPluginRegistrant.h
+**/GeneratedPluginRegistrant.m
+**/GeneratedPluginRegistrant.java
+**/Pods/
+**/.symlinks/
+.DS_Store
