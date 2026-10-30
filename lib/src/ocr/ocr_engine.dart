@@ -16,6 +16,8 @@ import 'ocr_diagnostics.dart';
 import 'result_merger.dart';
 import 'model_paths.dart';
 import 'model_reader.dart';
+import 'model_url.dart'
+if (dart.library.js_interop) 'model_url_web.dart';
 
 /// 快速模式只处理原图，高精度保留多分支召回。
 enum OcrMode { fast, accurate }
@@ -125,10 +127,11 @@ class OcrEngine {
   /// 从当前 assetKey 读取模型；独立临时目录避免复用插件的同名旧缓存。
   ///
   /// 原生接口需要文件路径，临时文件仅供本次会话创建使用，加载后立即清理。
-  /// Web 继续直接使用资源 URL，不进行本地文件操作。
+  /// Web 通过引擎把 asset key 解析为资源 URL，不进行本地文件操作。
   Future<OrtSession> _createFreshSession(String path) async {
     if (kIsWeb) {
-      return _runtime.createSession(path);
+      // ONNX 插件直接请求 URL，不会像 rootBundle 一样补上资源目录。
+      return _runtime.createSession(resolveModelUrl(path));
     }
     if (File(path).isAbsolute) {
       if (!await File(path).exists()) {
